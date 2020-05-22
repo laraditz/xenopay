@@ -57,7 +57,15 @@ class XenopayResponse
 
     public function data()
     {
-        return $this->http->json()['data']['content'] ?? null;
+        if ($this->http->json() && isset($this->http->json()['data'], $this->http->json()['data']['content'])) {
+            return $this->http->json()['data']['content'];
+        }
+
+        if ($this->http->json() && isset($this->http->json()['data'])) {
+            return $this->http->json()['data'];
+        }
+
+        return null;
     }
 
     public function errors(): ?array
