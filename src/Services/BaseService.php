@@ -2,22 +2,20 @@
 
 namespace Laraditz\Xenopay\Services;
 
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use Laraditz\Xenopay\XenopayResponse;
-use Illuminate\Validation\ValidationException;
-use Illuminate\Http\Client\Response;
 
 class BaseService
 {
     /**
-     * Base url for api
+     * Base url for api.
      */
     private $base_url;
 
     /**
-     * Define finalize URL and METHOD Request
+     * Define finalize URL and METHOD Request.
      */
     private $url;
 
@@ -34,7 +32,7 @@ class BaseService
     protected $validator;
 
     /**
-     *  Class Cosntructor
+     *  Class Cosntructor.
      */
     public function __construct()
     {
@@ -52,13 +50,13 @@ class BaseService
     }
 
     /**
-     * Executer for API Call
+     * Executer for API Call.
      * @return mixed
      */
     protected function execute()
     {
         if ($this->getUrl() === null) {
-            $url = $this->getBaseUrl() . config("xenopay.routes." . $this->getService() . "." . Str::snake($this->getAction()));
+            $url = $this->getBaseUrl() . config('xenopay.routes.' . $this->getService() . '.' . Str::snake($this->getAction()));
             $this->setUrl($url);
         }
 
@@ -73,7 +71,6 @@ class BaseService
 
             return new XenopayResponse($response);
         } catch (Exception $e) {
-
             return new XenopayResponse(Http::fake(function ($request) use ($e) {
                 return Http::response(['status' => false, 'data' => ['message' => $e->getMessage()]], 502);
             })->get($this->getUrl()));
@@ -160,7 +157,7 @@ class BaseService
         return $this;
     }
 
-    function withPayload(array $payload)
+    public function withPayload(array $payload)
     {
         return self::tap($this, function ($request) use ($payload) {
             return $this->payload = array_merge_recursive($this->payload, $payload);
@@ -177,7 +174,7 @@ class BaseService
         return $this->payload;
     }
 
-    function withHeaders(array $headers)
+    public function withHeaders(array $headers)
     {
         return self::tap($this, function ($request) use ($headers) {
             return $this->headers = array_merge_recursive($this->headers, $headers);
