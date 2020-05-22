@@ -94,7 +94,7 @@ class XenopayResponse
         return null;
     }
 
-    function __call($method, $args)
+    public function __call($method, $args)
     {
         if (static::hasMacro($method)) {
             return $this->macroCall($method, $args);
