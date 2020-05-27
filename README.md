@@ -11,7 +11,7 @@ Xenopay SDK for Laravel.
 
 Via Composer
 
-``` bash
+```bash
 $ composer require laraditz/xenopay
 ```
 
@@ -29,6 +29,14 @@ Edit the `config/app.php` file and add the following line to register the servic
 
 > Tip: If you're on Laravel version **5.5** or higher, you can skip this part of the setup in favour of the Auto-Discovery feature.
 
+You can set default Xenopay account in your `.env` so that you do not need to pass it everytime you login.
+```
+...
+XENOPAY_EMAIL=
+XENOPAY_PASSWORD=
+...
+``` 
+
 ## Usage
 
 Example usage as below snippet:
@@ -38,6 +46,9 @@ $response = \Xenopay::auth()->login(['email' => 'test@mail.com', 'password' => '
 
 // using Service Container
 $response = app('Xenopay')->auth()->login(['email' => 'test@mail.com', 'password' => 'password']);
+
+// login
+$response = \Xenopay::auth()->login(); // if u have set default account in .env, do not need to pass anything
 
 // create bill
 $response = \Xenopay::bill()->withToken($access_token)->create([

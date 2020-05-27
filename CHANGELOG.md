@@ -2,6 +2,12 @@
 
 All notable changes to Laraditz Xenopay will be documented in this file.
 
+## Version 1.0.1 (2020-05-27)
+
+### Added
+- Add default xenopay account in config.
+- Add support for login from default account or by passed variables.
+
 ## Version 1.0.0 (2020-05-27)
 
 ### Added
