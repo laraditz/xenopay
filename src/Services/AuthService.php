@@ -2,8 +2,6 @@
 
 namespace Laraditz\Xenopay\Services;
 
-use Illuminate\Validation\ValidationException;
-
 class AuthService extends BaseService
 {
     public function login(array $payload)

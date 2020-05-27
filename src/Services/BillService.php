@@ -2,8 +2,6 @@
 
 namespace Laraditz\Xenopay\Services;
 
-use Illuminate\Validation\ValidationException;
-
 class BillService extends BaseService
 {
     public function create(array $payload)
