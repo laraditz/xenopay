@@ -64,6 +64,10 @@ $response->data() : mixed; // response content
 $response->errors() : array; // usually contain validation errors
 ```
 
+## Change log
+
+Please see the [changelog](CHANGELOG.md) for more information on what has changed recently.
+
 ## Credits
 
 - [Raditz Farhan](https://github.com/raditzfarhan)
