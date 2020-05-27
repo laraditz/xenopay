@@ -1,0 +1,30 @@
+{
+	"name": "laraditz/xenopay",
+	"description": "Xenopay SDK for Laravel",
+	"type": "laravel-package",
+	"require": {
+		"php": "^7.2.5",
+		"illuminate/support": "^7.0|^8.0"
+	},
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Farhan",
+			"email": "raditzfarhan@gmail.com"
+		}
+	],
+	"minimum-stability": "dev",
+	"autoload": {
+		"psr-4": {
+			"Laraditz\\Xenopay\\": "src/"
+		}
+	},
+	"extra": {
+		"laravel": {
+			"providers": [ "Laraditz\\Xenopay\\XenopayServiceProvider" ],
+			"aliases": {
+				"Xenopay": "Laraditz\\Xenopay\\Facades\\Xenopay"
+			}
+		}
+	}
+}
