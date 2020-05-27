@@ -1,5 +1,11 @@
 # Xenopay
-Xenopay SDK for Laravel
+
+[![Latest Stable Version](https://poser.pugx.org/laraditz/xenopay/v/stable?format=flat-square)](https://packagist.org/packages/laraditz/xenopay)
+[![Total Downloads](https://img.shields.io/packagist/dt/laraditz/xenopay?style=flat-square)](https://packagist.org/packages/laraditz/xenopay)
+[![License](https://poser.pugx.org/laraditz/xenopay/license?format=flat-square)](https://packagist.org/packages/laraditz/xenopay)
+[![StyleCI](https://github.styleci.io/repos/7548986/shield?style=square)](https://github.com/laraditz/xenopay)
+
+Xenopay SDK for Laravel.
 
 ## Installation
 
@@ -32,6 +38,18 @@ $response = \Xenopay::auth()->login(['email' => 'test@mail.com', 'password' => '
 
 // using Service Container
 $response = app('Xenopay')->auth()->login(['email' => 'test@mail.com', 'password' => 'password']);
+
+// create bill
+$response = \Xenopay::bill()->withToken($access_token)->create([
+    'ref_no' => 'youruniquereferenceno',
+    'amount' => 1,
+    'description' => 'your description here.',
+    'contact' => '0121234567',
+    'redirect_url' => 'https://yourapp.com',
+]);
+
+// view bill
+$response = \Xenopay::bill()->withToken($access_token)->view($id);
 ```
 The request returns an instance of `Laraditz\Xenopay\XenopayResponse`, which provides a variety of methods that may be used to inspect the response:
 ```php
