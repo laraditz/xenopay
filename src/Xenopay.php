@@ -66,8 +66,6 @@ class XenopayResponse
                 return $this->http->json()['data'];
             }
         }
-
-        return null;
     }
 
     public function errors(): ?array
