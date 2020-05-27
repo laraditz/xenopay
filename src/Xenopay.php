@@ -62,7 +62,9 @@ class XenopayResponse
         }
 
         if ($this->http->json() && isset($this->http->json()['data'])) {
-            return $this->http->json()['data'];
+            if (!(isset($this->http->json()['data']['status'], $this->http->json()['data']['code'], $this->http->json()['data']['message']))) {
+                return $this->http->json()['data'];
+            }
         }
 
         return null;
@@ -74,6 +76,14 @@ class XenopayResponse
 
         if (@$this->http->json()['errors']) {
             return $this->http->json()['errors'];
+        }
+
+        if (@$this->http->json()['data']['error']) {
+            if (@$this->http->json()['data']['error']['Bill']) {
+                return $this->http->json()['data']['error']['Bill'];
+            } else {
+                return $this->http->json()['data']['error'];
+            }
         }
 
         return $errors;

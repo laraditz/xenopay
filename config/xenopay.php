@@ -26,7 +26,7 @@ return [
         ],
         'bill' => [
             'create' => '/bills/create',
-            'view' => '/bills/{id}',
+            'view' => '/bills/:id',
         ],
     ],
 ];

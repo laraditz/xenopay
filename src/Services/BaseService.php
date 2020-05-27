@@ -29,6 +29,8 @@ class BaseService
 
     private $action;
 
+    private $placeholder = [];
+
     protected $validator;
 
     /**
@@ -67,6 +69,7 @@ class BaseService
         }
 
         try {
+            // dd($this->getHeaders());
             $response = Http::withHeaders($this->getHeaders())->{$this->getMethod()}($this->getUrl(), $this->getPayload());
 
             return new XenopayResponse($response);
@@ -89,6 +92,14 @@ class BaseService
 
     protected function setUrl($url)
     {
+        if ($this->getPlaceholder()) {
+            $str_url = Str::of($url);
+
+            foreach ($this->getPlaceholder() as $key => $value) {
+                $url = $str_url->replace(":$key", $value);
+            }
+        }
+
         $this->url = $url;
     }
 
@@ -174,6 +185,23 @@ class BaseService
         return $this->payload;
     }
 
+    protected function placeholder($placeholder)
+    {
+        $this->setPlaceholder($placeholder);
+
+        return $this;
+    }
+
+    protected function setPlaceholder($placeholder)
+    {
+        $this->placeholder = $placeholder;
+    }
+
+    protected function getPlaceholder()
+    {
+        return $this->placeholder;
+    }
+
     public function withHeaders(array $headers)
     {
         return self::tap($this, function ($request) use ($headers) {
@@ -184,6 +212,13 @@ class BaseService
     protected function getHeaders()
     {
         return $this->headers;
+    }
+
+    public function withToken($token)
+    {
+        return self::tap($this, function ($request) use ($token) {
+            return $this->headers = array_merge_recursive($this->headers, ['Authorization' => 'Bearer ' . $token]);
+        });
     }
 
     protected function tap($value, $callback)
