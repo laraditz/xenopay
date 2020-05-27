@@ -17,7 +17,7 @@ return [
     | Default account
     |--------------------------------------------------------------------------
     |
-    | This details are used for xenopay authentication. If not set then need to send as payload on 
+    | This details are used for xenopay authentication. If not set then need to send as payload on
     |
     */
     'email' => env('XENOPAY_EMAIL'),
