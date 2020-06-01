@@ -2,8 +2,8 @@
 
 namespace Laraditz\Xenopay\Services;
 
-use Laraditz\Xenopay\Models\XenopayPayment;
 use Laraditz\Xenopay\Exceptions\GeneralHttpException;
+use Laraditz\Xenopay\Models\XenopayPayment;
 
 class BillService extends BaseService
 {
