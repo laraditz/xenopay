@@ -37,6 +37,12 @@ XENOPAY_PASSWORD=
 ...
 ``` 
 
+## Getting started
+Execute migration file:
+```bash
+php artisan migrate
+```
+
 ## Usage
 
 Example usage as below snippet:

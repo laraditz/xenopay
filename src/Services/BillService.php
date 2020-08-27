@@ -2,6 +2,9 @@
 
 namespace Laraditz\Xenopay\Services;
 
+use Laraditz\Xenopay\Exceptions\GeneralHttpException;
+use Laraditz\Xenopay\Models\XenopayPayment;
+
 class BillService extends BaseService
 {
     public function create(array $payload)
@@ -14,11 +17,48 @@ class BillService extends BaseService
             'redirect_url' => 'required|url',
             'remark' => 'nullable|string',
         ]);
-        $payload = ['Bill' => $payload];
+        $full_payload = ['Bill' => $payload];
 
-        return $this->action(__FUNCTION__)
-            ->withPayload($payload)
+        $response = $this->action(__FUNCTION__)
+            ->withPayload($full_payload)
             ->post();
+
+        if (!$response->isSuccess()) {
+            return $response;
+        }
+
+        if (!$response->data()) {
+            return $response;
+        }
+
+        $response_data = $response->data();
+
+        try {
+            $payment = XenopayPayment::updateOrCreate(
+                [
+                    'tx_id' => $response_data['id'],
+                ],
+                [
+                    'ref_no' => $payload['ref_no'],
+                    'currency_code' => $response_data['currency_code'],
+                    'amount' => $payload['amount'],
+                    'description' => $payload['description'],
+                    'username' => $response_data['username'],
+                    'email' => $response_data['email'],
+                    'contact' => $payload['contact'],
+                    'remark' => $payload['remark'] ?? null,
+                    'redirect_url' => $response_data['url'],
+                ]
+            );
+        } catch (\Exception $e) {
+            throw new GeneralHttpException($e->getMessage());
+        }
+
+        if (!$payment) {
+            throw new GeneralHttpException('Error saving payment request.');
+        }
+
+        return $response;
     }
 
     public function view($id)

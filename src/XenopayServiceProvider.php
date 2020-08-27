@@ -17,7 +17,7 @@ class XenopayServiceProvider extends ServiceProvider
             __DIR__ . '/../config/xenopay.php' => config_path('xenopay.php'),
         ]);
 
-        // $this->loadMigrationsFrom(__DIR__ . '/migrations');
+        $this->loadMigrationsFrom(__DIR__ . '/../migrations');
     }
 
     /**
